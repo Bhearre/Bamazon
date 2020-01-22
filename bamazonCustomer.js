@@ -72,9 +72,10 @@ console.log("Chosen Product Price is " + chosenProduct.price);
                                     console.log("New quantity of Chosen Product is " + newQuantity);
 
                                     var totalOrderCost = answer.quantity * chosenProduct.price;
+                                    var newTotalSales = chosenProduct.product_sales + (chosenProduct.price * answer.quantity)
                                     console.log("Your order will be " + totalOrderCost);
                                     connection.query("UPDATE products SET ? WHERE ?", [{
-                                        
+                                        product_sales: newTotalSales,
                                         stock_quantity: newQuantity
                                     }, {
                                         item_id: chosenProduct.item_id

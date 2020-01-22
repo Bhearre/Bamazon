@@ -143,10 +143,11 @@ function addInventory() {
 // Manager's ability to add new products for sale 
 function addNewProduct() {
     //connection.connect(function (err) {
-    connection.query("SELECT product_name FROM products", function (err) {
+    connection.query("SELECT * FROM departments", function (err, departments) {
         //console.log("connected as " + connection.threadId);
         if (err) throw err;
         //run the start function after the connection is made to prompt the user
+
 
 
         inquirer
@@ -158,8 +159,9 @@ function addNewProduct() {
                 },
                 {
                     name: "department_name",
-                    type: "input",
-                    message: "What is the department name?"
+                    type: "list",
+                    message: "What is the department",
+                    choices: departments.map(department => department.department_name)
                 },
                 {
                     name: "price",
@@ -191,9 +193,11 @@ function addNewProduct() {
 
                 console.log("this is answer : " + answer.product_name + " " + answer.stock_quantity);
 
+                var chosenDepartment = departments.find(department => department.department_name === answer.department_name)
+                var departmentId = chosenDepartment.department_id
                 //if (err) throw err;
                 // console.log("Connected!");
-                queryString = "INSERT INTO products (product_name, product_sales, department_name, price, stock_quantity) VALUES ('" + answer.product_name + "', '" + 0 + "', '" + answer.department_name + "', '" + answer.price + "', '" + answer.stock_quantity + "')";
+                queryString = "INSERT INTO products (product_name, product_sales, department_id, price, stock_quantity) VALUES ('" + answer.product_name + "', '" + 0 + "', '" + departmentId + "', '" + answer.price + "', '" + answer.stock_quantity + "')";
                 connection.query(queryString, function (err, result) {
 
                     if (err) throw err;
