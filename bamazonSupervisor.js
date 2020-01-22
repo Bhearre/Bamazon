@@ -23,6 +23,7 @@ connection.connect(function (err) {
     start();
 });
 
+// Provide supervisor with a choise prompt
 function start() {
 
     inquirer.prompt({
@@ -36,11 +37,6 @@ function start() {
     })
         .then(function (answer) {
 
-
-            console.log("this is the one that works - answer name: " + answer.option);
-
-            //for (i=0;i<answer.choices.length;i++)
-
             switch (answer.option) {
                 case "View Product Sales by Department":
                     viewProductSalesByDepartment();
@@ -52,7 +48,7 @@ function start() {
         })
 }
 
-//Managers view of items for sale
+// Supervisors view of sales by department
 var viewProductSalesByDepartment = function () {
     var query = "SELECT departments.department_id, departments.department_name, departments.over_head_costs, SUM(products.product_sales) AS total_sales " +
         "FROM departments LEFT JOIN products ON departments.department_id = products.department_id " +
@@ -62,16 +58,7 @@ var viewProductSalesByDepartment = function () {
         var table = new Table({
             head: ['department_id', 'department_name', 'over_head_costs', 'product_sales', 'total_profit']
         });
-        // var uniqueDepartments = {};
-        // for (var i = 0; i < results.length; i++) {
-        //     const r = results[i]
-        //     // We haven't found one with that id yet, make it brand new
-        //     if (!uniqueDepartments[r.department_id]) {
-        //         uniqueDepartments[r.department_id] = {
-        //             department_id 
-        //         }
-        //     }
-        // }
+        
         for (var i = 0; i < results.length; i++) {
             const r = results[i]
             table.push([r.department_id, r.department_name, r.over_head_costs, r.total_sales, (r.total_sales - r.over_head_costs)])
@@ -81,7 +68,7 @@ var viewProductSalesByDepartment = function () {
     })
 }
 
-// Manager's ability to add new products for sale 
+// Supervisor's ability to create a new department 
 function createNewDepartment() {
     inquirer
         .prompt([
@@ -114,10 +101,10 @@ function createNewDepartment() {
                 console.log("You have added " + answer.department_name + " with overhead costs of " + answer.over_head_costs + ".");
 
 
-            }); start(); //closes connection query
+            }); start(); 
 
-        }); //closes then function answer
+        }); 
 
-} //closes addtoinventory function
+} 
 
 

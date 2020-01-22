@@ -39,11 +39,6 @@ function start() {
     })
         .then(function (answer) {
 
-
-            console.log("this is the one that works - answer name: " + answer.option);
-
-            //for (i=0;i<answer.choices.length;i++)
-
             switch (answer.option) {
                 case "View Products for Sale":
                     viewProducts();
@@ -60,13 +55,11 @@ function start() {
                 case "Add a New Product":
                     addNewProduct();
                     console.log("we're in case 3 " + answer.option);
-                    //managerChoice = $(addNewProduct);
                     break;
 
             }
-        }) //closes then function answer
-    //} //closes connection
-}//closes start function
+        })
+}
 
 //Managers view of items for sale
 var viewProducts = function () {
@@ -146,9 +139,6 @@ function addNewProduct() {
     connection.query("SELECT * FROM departments", function (err, departments) {
         //console.log("connected as " + connection.threadId);
         if (err) throw err;
-        //run the start function after the connection is made to prompt the user
-
-
 
         inquirer
             .prompt([
@@ -201,20 +191,14 @@ function addNewProduct() {
                 connection.query(queryString, function (err, result) {
 
                     if (err) throw err;
-                    
+
                     console.log("You have added " + answer.stock_quantity + " units of " + answer.product_name + ".");
-                 
-                
-                });   start(); //closes connection query
-
-    }); //closes then function answer
 
 
+                }); start();
 
+            });
+    })
 
-
-})//closes connection
-
-    } //closes addtoinventory function
-
+}
 
