@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var utility = require('./utility');
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -27,7 +28,8 @@ connection.connect(function (err) {
 function start() {
     connection.query("SELECT * FROM products", function (err, results) {
         if (err) throw err;
-        console.log(results);
+        const displayRes = utility.getDisplayProductFromDBResults(results)
+        console.log(displayRes);
         inquirer
             .prompt(
                 {
@@ -62,8 +64,14 @@ function start() {
                                     console.log("Chosen Product is " + chosenProduct.product_name);
                                     console.log("Chosen Product is " + chosenProduct.item_id);
 
+console.log("Chosen Product Price is " + chosenProduct.price);
+                                    
+                                    
                                     var newQuantity = chosenProduct.stock_quantity - answer.quantity;
-                                    var totalOrderCost = chosenProduct.stock_quantity * chosenProduct.price;
+
+                                    console.log("New quantity of Chosen Product is " + newQuantity);
+
+                                    var totalOrderCost = answer.quantity * chosenProduct.price;
                                     console.log("Your order will be " + totalOrderCost);
                                     connection.query("UPDATE products SET ? WHERE ?", [{
                                         
@@ -71,7 +79,7 @@ function start() {
                                     }, {
                                         item_id: chosenProduct.item_id
                                     }], function (err, results) {
-                                        console.log("Order successfully placed and your total cost will be " + totalOrderCost);
+                                        console.log("Order successfully placed and your total cost will be $" + totalOrderCost);
                                         start();
                                     });
                                 } else {
