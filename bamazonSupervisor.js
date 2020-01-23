@@ -61,6 +61,7 @@ var viewProductSalesByDepartment = function () {
         
         for (var i = 0; i < results.length; i++) {
             const r = results[i]
+            if (r.total_sales === null) r.total_sales = 0;
             table.push([r.department_id, r.department_name, r.over_head_costs, r.total_sales, (r.total_sales - r.over_head_costs)])
         }
         console.log(table.toString());

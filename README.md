@@ -40,6 +40,10 @@ https://drive.google.com/open?id=1U01dvV-3uGUDSD2bHvIII2s0W2urjFb5
    
    * Create New Department
 
-   Here is link to see the Supervisor Module in Operation:
+   Here is link to see the Supervisor Module showing the product for sale:
+   
+   https://drive.google.com/open?id=1eA6oC05bkpEmztecbfH7LEMqMW1W6pg3
+
+    Here is a link of the Supervisor Module allowing for the addition of a new product and overhead rate:
 
    https://drive.google.com/open?id=1ElENoMh-Ts_c_pJMpYLutto-z4h12tGZ
